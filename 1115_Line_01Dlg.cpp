@@ -219,6 +219,7 @@ void CMy1115Line01Dlg::OnBnClickedButton1()  //  Register button
 	{
 		lpTCPIP = new TCPIP();
 		lpTCPIP->Start_TCP_Client(&Line_Sock, Server_Port, Server_IP, LINE_EVENT, m_hWnd);
+		Draw("pics/anon.bmp", 10, 10, 0, 0.0);
 		TCPIP_F = 1;
 	}
 }
