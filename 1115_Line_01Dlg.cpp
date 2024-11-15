@@ -62,9 +62,9 @@ CMy1115Line01Dlg::CMy1115Line01Dlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_MY1115_LINE_01_DIALOG, pParent)
 	, m_Account(_T("Kevin"))
 	, m_Password(_T("112511142"))
-	, m_Display(_T(""))
-	, m_Msg(_T(""))
-	, m_Reciver(_T(""))
+	, m_Display(_T("Welcome\r\n"))
+	, m_Msg(_T("HELLO"))
+	, m_Reciver(_T("ALL"))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -226,9 +226,10 @@ void CMy1115Line01Dlg::OnBnClickedButton1()  //  Register button
 void CMy1115Line01Dlg::OnBnClickedButton2()  //  SendMsg button
 {
 	//  4. Send message to server
+	//"MESSAGE/Account/Reciver/Message" command
 	char S1[2000];
 	UpdateData(TRUE);
-	sprintf_s(S1, sizeof(S1), "MSG/%s", m_Account);
+	sprintf_s(S1, sizeof(S1), "MESSAGE/%s/%s/%s", m_Account, m_Reciver, m_Msg);
 	UpdateData(FALSE);
 	send(Line_Sock, S1, strlen(S1), 0);
 }
@@ -260,6 +261,20 @@ LRESULT CMy1115Line01Dlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				S1[i] = 0;
 				SetWindowText(S1);
+
+				//拆解字串
+				Cmd_Proc(S1, (char*)Cmd, '/');
+				UpdateData(TRUE);
+				if (!strcmp(&Cmd[0][0], "REGISTER_OK"))
+				{
+					m_Display += "Register OK\r\n";
+				}
+				else if (!strcmp(&Cmd[0][0], "MESSAGE"))
+				{
+					sprintf_s(S1, sizeof(S1), "%s:\r\n  %s\r\n\r\n", &Cmd[1][0], &Cmd[3][0]);
+					m_Display += S1;
+				}
+				UpdateData(FALSE);
 			}
 			break;
 
