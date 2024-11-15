@@ -207,7 +207,10 @@
     <None Include="res\My1115Line01.rc2" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="pics\anon.bmp" />
+    <Image Include="pics\nina.bmp" />
     <Image Include="res\1115_Line_01.ico" />
+    <Image Include="res\icon1.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

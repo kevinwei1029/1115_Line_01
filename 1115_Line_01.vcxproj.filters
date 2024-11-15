@@ -59,5 +59,14 @@
     <Image Include="res\1115_Line_01.ico">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\icon1.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pics\anon.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pics\nina.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

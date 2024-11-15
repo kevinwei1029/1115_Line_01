@@ -66,7 +66,8 @@ CMy1115Line01Dlg::CMy1115Line01Dlg(CWnd* pParent /*=nullptr*/)
 	, m_Msg(_T("HELLO"))
 	, m_Reciver(_T("ALL"))
 {
-	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	//m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	m_hIcon = AfxGetApp()->LoadIcon(IDB_BITMAP1);
 }
 
 void CMy1115Line01Dlg::DoDataExchange(CDataExchange* pDX)
@@ -168,7 +169,7 @@ void CMy1115Line01Dlg::OnPaint()
 		int y = (rect.Height() - cyIcon + 1) / 2;
 
 		// Draw the icon
-		dc.DrawIcon(x, y, m_hIcon);
+		//dc.DrawIcon(x, y, m_hIcon);
 	}
 	else
 	{
