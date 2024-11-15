@@ -66,8 +66,8 @@ CMy1115Line01Dlg::CMy1115Line01Dlg(CWnd* pParent /*=nullptr*/)
 	, m_Msg(_T("HELLO"))
 	, m_Reciver(_T("ALL"))
 {
-	//m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
-	m_hIcon = AfxGetApp()->LoadIcon(IDB_BITMAP1);
+	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	//m_hIcon2 = AfxGetApp()->LoadIcon(IDI_ICON2);
 }
 
 void CMy1115Line01Dlg::DoDataExchange(CDataExchange* pDX)
@@ -170,6 +170,7 @@ void CMy1115Line01Dlg::OnPaint()
 
 		// Draw the icon
 		//dc.DrawIcon(x, y, m_hIcon);
+		dc.DrawIcon(x, y, m_hIcon2);
 	}
 	else
 	{
@@ -220,7 +221,7 @@ void CMy1115Line01Dlg::OnBnClickedButton1()  //  Register button
 	{
 		lpTCPIP = new TCPIP();
 		lpTCPIP->Start_TCP_Client(&Line_Sock, Server_Port, Server_IP, LINE_EVENT, m_hWnd);
-		Draw("pics/anon.bmp", 10, 10, 0, 0.0);
+		//Draw("pics/anon.bmp", 10, 10, 0, 0.0);
 		TCPIP_F = 1;
 	}
 }

@@ -68,5 +68,8 @@
     <Image Include="pics\nina.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\nina.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
