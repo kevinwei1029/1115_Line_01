@@ -33,4 +33,8 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CTabCtrl m_Tab1;
+	afx_msg void OnSelchangeTab1(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnBnClickedButton1();
+	CString m_Account;
+	CString m_Password;
 };

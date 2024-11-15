@@ -52,6 +52,8 @@ END_MESSAGE_MAP()
 
 CMy1115Line01Dlg::CMy1115Line01Dlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_MY1115_LINE_01_DIALOG, pParent)
+	, m_Account(_T(""))
+	, m_Password(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -60,12 +62,16 @@ void CMy1115Line01Dlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_TAB1, m_Tab1);
+	DDX_Text(pDX, IDC_EDIT1, m_Account);
+	DDX_Text(pDX, IDC_EDIT2, m_Password);
 }
 
 BEGIN_MESSAGE_MAP(CMy1115Line01Dlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, &CMy1115Line01Dlg::OnSelchangeTab1)
+	ON_BN_CLICKED(IDC_BUTTON1, &CMy1115Line01Dlg::OnBnClickedButton1)
 END_MESSAGE_MAP()
 
 
@@ -101,6 +107,13 @@ BOOL CMy1115Line01Dlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
 	// TODO: Add extra initialization here
+	m_Tab1.InsertItem(0, "LOGO");            //  week 1
+	m_Tab1.InsertItem(1, "Register");        //  week 1
+	m_Tab1.InsertItem(2, "Chatroom");        //  week 1
+	m_Tab1.InsertItem(3, "Friends");         //  week 2
+	m_Tab1.InsertItem(4, "Phone call");	     //  week 3, 4
+	m_Tab1.InsertItem(5, "Video call");	     //  week 4, 5
+	m_Tab1.InsertItem(6, "Sticker");         //  week 5
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -154,3 +167,36 @@ HCURSOR CMy1115Line01Dlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CMy1115Line01Dlg::OnSelchangeTab1(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	// TODO: Add your control notification handler code here
+	char S1[200];
+	int i = m_Tab1.GetCurSel();
+	sprintf_s(S1, sizeof(S1), "%d", m_Tab1.GetCurSel());
+	SetWindowText(S1);
+
+	switch (i)
+	{
+	case 0:
+		SetWindowText("LOGO");
+		break;
+
+	case 1:
+		SetWindowText("Register");
+		break;
+
+	case 2:
+		SetWindowText("Chatroom");
+		break;
+	}
+
+	*pResult = 0;
+}
+
+
+void CMy1115Line01Dlg::OnBnClickedButton1()  //  Register button
+{
+	// TODO: Add your control notification handler code here
+}
