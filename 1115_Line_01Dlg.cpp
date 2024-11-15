@@ -78,6 +78,7 @@ void CMy1115Line01Dlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT3, m_Display);
 	DDX_Text(pDX, IDC_EDIT4, m_Msg);
 	DDX_Text(pDX, IDC_EDIT5, m_Reciver);
+	DDX_Control(pDX, IDC_EDIT3, m_Display2);
 }
 
 BEGIN_MESSAGE_MAP(CMy1115Line01Dlg, CDialogEx)
@@ -271,10 +272,13 @@ LRESULT CMy1115Line01Dlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				}
 				else if (!strcmp(&Cmd[0][0], "MESSAGE"))
 				{
-					sprintf_s(S1, sizeof(S1), "%s:\r\n  %s\r\n\r\n", &Cmd[1][0], &Cmd[3][0]);
+					sprintf_s(S1, sizeof(S1), "%s:\r\n   %s\r\n\r\n", &Cmd[1][0], &Cmd[3][0]);
 					m_Display += S1;
 				}
 				UpdateData(FALSE);
+				
+				// roll to the bottom
+				m_Display2.LineScroll(m_Display2.GetLineCount());
 			}
 			break;
 

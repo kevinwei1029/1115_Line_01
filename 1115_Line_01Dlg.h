@@ -42,4 +42,5 @@ public:
 	CString m_Display;
 	CString m_Msg;
 	CString m_Reciver;
+	CEdit m_Display2;
 };
