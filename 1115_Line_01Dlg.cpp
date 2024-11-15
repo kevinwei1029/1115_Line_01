@@ -7,11 +7,14 @@
 #include "1115_Line_01.h"
 #include "1115_Line_01Dlg.h"
 #include "afxdialogex.h"
+#include "TCPIP.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
+TCPIP* lpTCPIP;
+BOOL TCPIP_F = 0;
 
 // CAboutDlg dialog used for App About
 
@@ -52,8 +55,8 @@ END_MESSAGE_MAP()
 
 CMy1115Line01Dlg::CMy1115Line01Dlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_MY1115_LINE_01_DIALOG, pParent)
-	, m_Account(_T(""))
-	, m_Password(_T(""))
+	, m_Account(_T("Kevin"))
+	, m_Password(_T("112511142"))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
