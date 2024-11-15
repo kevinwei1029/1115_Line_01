@@ -13,8 +13,13 @@
 #define new DEBUG_NEW
 #endif
 
+//  0. Variables
+#define LINE_EVENT  (WM_USER + 100)
 TCPIP* lpTCPIP;
-BOOL TCPIP_F = 0;
+SOCKET Line_Sock;
+BOOL TCPIP_F = 0;  //  if registered
+char Server_IP[100] = {"140.113.170.78"};
+int  Server_Port = 6000;
 
 // CAboutDlg dialog used for App About
 
@@ -201,5 +206,50 @@ void CMy1115Line01Dlg::OnSelchangeTab1(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CMy1115Line01Dlg::OnBnClickedButton1()  //  Register button
 {
-	// TODO: Add your control notification handler code here
+	//  1. New a TCPIP object and start TCPIP client
+	if (!TCPIP_F)
+	{
+		lpTCPIP = new TCPIP();
+		lpTCPIP->Start_TCP_Client(&Line_Sock, Server_Port, Server_IP, LINE_EVENT, m_hWnd);
+		TCPIP_F = 1;
+	}
+
+	//  2. Send account and password to server & "REGISTER/Account/Password" command
+	char S1[2000];
+	sprintf_s(S1, sizeof(S1), "REGISTER/%s/%s", m_Account, m_Password);
+	send(Line_Sock, S1, strlen(S1), 0);
+}
+
+
+LRESULT CMy1115Line01Dlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
+{
+	char S1[2000];
+	int i = 0;
+	//  3. Receive the response from server
+	
+	if (message == LINE_EVENT)
+	{
+		switch (lParam)
+		{
+		case FD_CONNECT:
+			break;
+
+		case FD_READ:
+			i = recv(Line_Sock, S1, sizeof(S1), 0);
+			if (i > 0)
+			{
+				S1[i] = 0;
+				SetWindowText(S1);
+			}
+			break;
+
+		case FD_CLOSE:
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	return CDialogEx::WindowProc(message, wParam, lParam);
 }

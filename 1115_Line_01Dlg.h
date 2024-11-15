@@ -37,4 +37,5 @@ public:
 	afx_msg void OnBnClickedButton1();
 	CString m_Account;
 	CString m_Password;
+	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 };
