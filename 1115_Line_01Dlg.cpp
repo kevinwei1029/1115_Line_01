@@ -213,11 +213,6 @@ void CMy1115Line01Dlg::OnBnClickedButton1()  //  Register button
 		lpTCPIP->Start_TCP_Client(&Line_Sock, Server_Port, Server_IP, LINE_EVENT, m_hWnd);
 		TCPIP_F = 1;
 	}
-
-	//  2. Send account and password to server & "REGISTER/Account/Password" command
-	char S1[2000];
-	sprintf_s(S1, sizeof(S1), "REGISTER/%s/%s", m_Account, m_Password);
-	send(Line_Sock, S1, strlen(S1), 0);
 }
 
 
@@ -232,10 +227,17 @@ LRESULT CMy1115Line01Dlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		switch (lParam)
 		{
 		case FD_CONNECT:
+			SetWindowText("FD_CONNECT");
+			//  2. Send account and password to server & "REGISTER/Account/Password" command
+			char S1[2000];
+			UpdateData(TRUE);
+			sprintf_s(S1, sizeof(S1), "REGISTER/%s/%s", m_Account, m_Password);
+			UpdateData(FALSE);
+			send(wParam, S1, strlen(S1), 0);
 			break;
 
 		case FD_READ:
-			i = recv(Line_Sock, S1, sizeof(S1), 0);
+			i = recv(wParam, S1, sizeof(S1), 0);
 			if (i > 0)
 			{
 				S1[i] = 0;
@@ -244,6 +246,7 @@ LRESULT CMy1115Line01Dlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 
 		case FD_CLOSE:
+			SetWindowText("FD_CLOSE");
 			break;
 
 		default:
