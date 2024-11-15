@@ -62,6 +62,9 @@ CMy1115Line01Dlg::CMy1115Line01Dlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_MY1115_LINE_01_DIALOG, pParent)
 	, m_Account(_T("Kevin"))
 	, m_Password(_T("112511142"))
+	, m_Display(_T(""))
+	, m_Msg(_T(""))
+	, m_Reciver(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -72,6 +75,9 @@ void CMy1115Line01Dlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TAB1, m_Tab1);
 	DDX_Text(pDX, IDC_EDIT1, m_Account);
 	DDX_Text(pDX, IDC_EDIT2, m_Password);
+	DDX_Text(pDX, IDC_EDIT3, m_Display);
+	DDX_Text(pDX, IDC_EDIT4, m_Msg);
+	DDX_Text(pDX, IDC_EDIT5, m_Reciver);
 }
 
 BEGIN_MESSAGE_MAP(CMy1115Line01Dlg, CDialogEx)
@@ -80,6 +86,7 @@ BEGIN_MESSAGE_MAP(CMy1115Line01Dlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, &CMy1115Line01Dlg::OnSelchangeTab1)
 	ON_BN_CLICKED(IDC_BUTTON1, &CMy1115Line01Dlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON2, &CMy1115Line01Dlg::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
 
@@ -213,6 +220,17 @@ void CMy1115Line01Dlg::OnBnClickedButton1()  //  Register button
 		lpTCPIP->Start_TCP_Client(&Line_Sock, Server_Port, Server_IP, LINE_EVENT, m_hWnd);
 		TCPIP_F = 1;
 	}
+}
+
+
+void CMy1115Line01Dlg::OnBnClickedButton2()  //  SendMsg button
+{
+	//  4. Send message to server
+	char S1[2000];
+	UpdateData(TRUE);
+	sprintf_s(S1, sizeof(S1), "MSG/%s", m_Account);
+	UpdateData(FALSE);
+	send(Line_Sock, S1, strlen(S1), 0);
 }
 
 

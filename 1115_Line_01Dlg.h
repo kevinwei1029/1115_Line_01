@@ -38,4 +38,8 @@ public:
 	CString m_Account;
 	CString m_Password;
 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
+	afx_msg void OnBnClickedButton2();
+	CString m_Display;
+	CString m_Msg;
+	CString m_Reciver;
 };
