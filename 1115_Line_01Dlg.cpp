@@ -418,6 +418,9 @@ LRESULT CMy1115Line01Dlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					sprintf_s(S1, sizeof(S1), "%s:\r\n   %s\r\n\r\n", &Cmd[1][0], &Cmd[3][0]);
 					m_Display += S1;
 				}
+				else if (!strcmp(&Cmd[0][0], "ONLINE"))
+				{
+				}
 				UpdateData(FALSE);
 
 				// roll to the bottom
@@ -456,6 +459,7 @@ void CMy1115Line01Dlg::OnTimer(UINT_PTR nIDEvent)
 			sprintf_s(S1, sizeof(S1), "QUERY/%s/%s", m_Account, Friend);
 			UpdateData(FALSE);
 			send(Line_Sock, S1, strlen(S1), 0);
+			Sleep(1000);
 		}
 	}
 
