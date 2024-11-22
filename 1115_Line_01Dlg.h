@@ -54,9 +54,6 @@ public:
 	CEdit m_Display2;
 	int Hiden_All();
 	CListCtrl m_list1;
-//	CListCtrl m_List1;
-	afx_msg void OnEnChangeEdit5();
 	afx_msg void OnBnClickedButton3();
 	CString m_friend;
-	afx_msg void OnEnChangeEdit6();
 };

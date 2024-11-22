@@ -82,7 +82,6 @@ void CMy1115Line01Dlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT5, m_Reciver);
 	DDX_Control(pDX, IDC_EDIT3, m_Display2);
 	DDX_Control(pDX, IDC_LIST1, m_list1);
-	//  DDX_Control(pDX, IDC_LIST1, m_List1);
 	DDX_Text(pDX, IDC_EDIT6, m_friend);
 }
 
@@ -93,9 +92,7 @@ BEGIN_MESSAGE_MAP(CMy1115Line01Dlg, CDialogEx)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, &CMy1115Line01Dlg::OnSelchangeTab1)
 	ON_BN_CLICKED(IDC_BUTTON1, &CMy1115Line01Dlg::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON2, &CMy1115Line01Dlg::OnBnClickedButton2)
-	ON_EN_CHANGE(IDC_EDIT5, &CMy1115Line01Dlg::OnEnChangeEdit5)
 	ON_BN_CLICKED(IDC_BUTTON3, &CMy1115Line01Dlg::OnBnClickedButton3)
-	ON_EN_CHANGE(IDC_EDIT6, &CMy1115Line01Dlg::OnEnChangeEdit6)
 END_MESSAGE_MAP()
 
 
@@ -407,25 +404,4 @@ LRESULT CMy1115Line01Dlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	}
 
 	return CDialogEx::WindowProc(message, wParam, lParam);
-}
-
-void CMy1115Line01Dlg::OnEnChangeEdit5()
-{
-	// TODO:  If this is a RICHEDIT control, the control will not
-	// send this notification unless you override the CDialogEx::OnInitDialog()
-	// function and call CRichEditCtrl().SetEventMask()
-	// with the ENM_CHANGE flag ORed into the mask.
-
-	// TODO:  Add your control notification handler code here
-}
-
-
-void CMy1115Line01Dlg::OnEnChangeEdit6()
-{
-	// TODO:  If this is a RICHEDIT control, the control will not
-	// send this notification unless you override the CDialogEx::OnInitDialog()
-	// function and call CRichEditCtrl().SetEventMask()
-	// with the ENM_CHANGE flag ORed into the mask.
-
-	// TODO:  Add your control notification handler code here
 }
