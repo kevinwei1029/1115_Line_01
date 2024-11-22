@@ -420,6 +420,25 @@ LRESULT CMy1115Line01Dlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 				}
 				else if (!strcmp(&Cmd[0][0], "ONLINE"))
 				{
+					int No = m_list1.GetItemCount(), Cur = 0;
+					CString S11;
+					char S12[2000];
+
+					while (strlen(&Cmd[Cur + 1][0]) > 0)
+					{
+						for (i = 0; i < No; i++)
+						{
+							S11 = m_list1.GetItemText(i, 0);
+							sprintf_s(S12, sizeof(S12), "%s", S11);
+							if (!strcmp(S12, &Cmd[Cur + 1][0]))
+							{
+								m_list1.SetItemText(i, 1, &Cmd[Cur + 2][0]);
+								m_list1.SetItemText(i, 2, "Online");
+								break;
+							}
+						}
+						Cur += 3;
+					}
 				}
 				UpdateData(FALSE);
 
