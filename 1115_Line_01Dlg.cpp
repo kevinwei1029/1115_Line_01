@@ -146,6 +146,7 @@ BOOL CMy1115Line01Dlg::OnInitDialog()
 //	GetDlgItem(IDC_STATIC1)->ShowWindow(SW_SHOW);  //  account
 //	GetDlgItem(IDC_STATIC2)->ShowWindow(SW_SHOW);  //  password
 //	GetDlgItem(IDC_STATIC6)->ShowWindow(SW_SHOW);  //  group box
+
 	//  auto register
 	OnBnClickedButton1();
 
@@ -153,6 +154,26 @@ BOOL CMy1115Line01Dlg::OnInitDialog()
 	m_list1.InsertColumn(0, "Name");         m_list1.SetColumnWidth(0, 120);  //  (AC)
 	m_list1.InsertColumn(1, "ID");	         m_list1.SetColumnWidth(1, 120);  //  (PW)
 	m_list1.InsertColumn(2, "Status"); 	     m_list1.SetColumnWidth(2, 120);  //  (Online/Offline)
+
+	//  read friend list from file
+	errno_t err;
+	FILE* In;
+	err = fopen_s(&In, "Friend.txt", "r");
+	int Cur;
+	char S1[2000];
+	if (err == 0)
+	{
+		Cur = 0;
+		while (!feof(In))
+		{
+			fscanf_s(In, "%s", S1, sizeof(S1));
+			m_list1.InsertItem(Cur, S1);		     //  Name
+			m_list1.SetItemText(Cur, 1, "???");      //  ID
+			m_list1.SetItemText(Cur, 2, "Offline");  //  Status
+			Cur++;
+		}
+		fclose(In);
+	}
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -331,8 +352,6 @@ void CMy1115Line01Dlg::OnBnClickedButton2()  //  SendMsg button
 
 void CMy1115Line01Dlg::OnBnClickedButton3()  //  Add friend button
 {
-	//  0. read file to get friend list
-
 	//  1. get friend 
 	UpdateData(TRUE);
 	char S1[2000];
