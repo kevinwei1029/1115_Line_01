@@ -159,18 +159,18 @@ BOOL CMy1115Line01Dlg::OnInitDialog()
 	errno_t err;
 	FILE* In;
 	err = fopen_s(&In, "Friend.txt", "r");
-	int Cur;
-	char S1[2000];
+	int No;
+	char S1[200];
 	if (err == 0)
 	{
-		Cur = 0;
 		while (!feof(In))
 		{
-			fscanf_s(In, "%s", S1, sizeof(S1));
-			m_list1.InsertItem(Cur, S1);		     //  Name
-			m_list1.SetItemText(Cur, 1, "???");      //  ID
-			m_list1.SetItemText(Cur, 2, "Offline");  //  Status
-			Cur++;
+			memset(S1, 0, sizeof(S1));
+			fscanf_s(In, "%s\n", S1, sizeof(S1));
+			No = m_list1.GetItemCount();
+			m_list1.InsertItem(No, S1);		     //  Name
+			m_list1.SetItemText(No, 1, "???");      //  ID
+			m_list1.SetItemText(No, 2, "Offline");  //  Status
 		}
 		fclose(In);
 	}
