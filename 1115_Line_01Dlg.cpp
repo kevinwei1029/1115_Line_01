@@ -93,6 +93,7 @@ BEGIN_MESSAGE_MAP(CMy1115Line01Dlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &CMy1115Line01Dlg::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON2, &CMy1115Line01Dlg::OnBnClickedButton2)
 	ON_BN_CLICKED(IDC_BUTTON3, &CMy1115Line01Dlg::OnBnClickedButton3)
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 
@@ -375,6 +376,7 @@ void CMy1115Line01Dlg::OnBnClickedButton3()  //  Add friend button
 	}
 
 	//  4. check if friend is online
+	SetTimer(5566, 15000, 0);
 }
 
 LRESULT CMy1115Line01Dlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
@@ -433,4 +435,29 @@ LRESULT CMy1115Line01Dlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	}
 
 	return CDialogEx::WindowProc(message, wParam, lParam);
+}
+
+
+void CMy1115Line01Dlg::OnTimer(UINT_PTR nIDEvent)
+{
+	// TODO: Add your message handler code here and/or call default
+	//  5. check if friend is online
+	int i = 0, No;
+	char S1[2000];
+	CString Friend;
+
+	if (nIDEvent == 5566)
+	{
+		No = m_list1.GetItemCount();
+		for (i = 0; i < No; i++)
+		{
+			Friend = m_list1.GetItemText(i, 0);
+			UpdateData(TRUE);
+			sprintf_s(S1, sizeof(S1), "QUERY/%s/%s", m_Account, Friend);
+			UpdateData(FALSE);
+			send(Line_Sock, S1, strlen(S1), 0);
+		}
+	}
+
+	CDialogEx::OnTimer(nIDEvent);
 }

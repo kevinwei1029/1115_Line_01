@@ -56,4 +56,5 @@ public:
 	CListCtrl m_list1;
 	afx_msg void OnBnClickedButton3();
 	CString m_friend;
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 };
