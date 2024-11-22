@@ -208,6 +208,25 @@ void CMy1115Line01Dlg::OnSelchangeTab1(NMHDR* pNMHDR, LRESULT* pResult)
 	case 2:
 		SetWindowText("Chatroom");
 		break;
+
+	case 3:
+		SetWindowText("Friends");
+		break;
+
+	case 4:
+		SetWindowText("Phone call");
+		break;
+
+	case 5:
+		SetWindowText("Video call");
+		break;
+
+	case 6:
+		SetWindowText("Sticker");
+		break;
+
+	default:
+		break;
 	}
 
 	*pResult = 0;
