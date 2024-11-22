@@ -338,12 +338,22 @@ void CMy1115Line01Dlg::OnBnClickedButton3()  //  Add friend button
 	char S1[2000];
 	sprintf_s(S1, sizeof(S1), "%s", m_friend);
 	UpdateData(FALSE);
+
 	//  2. add friend to list and set to offline
 	int Cur = m_list1.GetItemCount();
 	m_list1.InsertItem(Cur, S1);		     //  Name
 	m_list1.SetItemText(Cur, 1, "???");      //  ID
 	m_list1.SetItemText(Cur, 2, "Offline");  //  Status
+
 	//  3. save friend list to file(a+)
+	errno_t err;
+	FILE* In;
+	err = fopen_s(&In, "Friend.txt", "a+");
+	if (err == 0)
+	{
+		fprintf(In, "%s\n", S1);
+		fclose(In);
+	}
 
 	//  4. check if friend is online
 }
