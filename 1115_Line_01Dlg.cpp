@@ -65,6 +65,7 @@ CMy1115Line01Dlg::CMy1115Line01Dlg(CWnd* pParent /*=nullptr*/)
 	, m_Display(_T("Welcome\r\n"))
 	, m_Msg(_T("HELLO"))
 	, m_Reciver(_T("ALL"))
+	, m_friend(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 	//m_hIcon2 = AfxGetApp()->LoadIcon(IDI_ICON2);
@@ -80,6 +81,9 @@ void CMy1115Line01Dlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT4, m_Msg);
 	DDX_Text(pDX, IDC_EDIT5, m_Reciver);
 	DDX_Control(pDX, IDC_EDIT3, m_Display2);
+	DDX_Control(pDX, IDC_LIST1, m_list1);
+	//  DDX_Control(pDX, IDC_LIST1, m_List1);
+	DDX_Text(pDX, IDC_EDIT6, m_friend);
 }
 
 BEGIN_MESSAGE_MAP(CMy1115Line01Dlg, CDialogEx)
@@ -89,6 +93,9 @@ BEGIN_MESSAGE_MAP(CMy1115Line01Dlg, CDialogEx)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, &CMy1115Line01Dlg::OnSelchangeTab1)
 	ON_BN_CLICKED(IDC_BUTTON1, &CMy1115Line01Dlg::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON2, &CMy1115Line01Dlg::OnBnClickedButton2)
+	ON_EN_CHANGE(IDC_EDIT5, &CMy1115Line01Dlg::OnEnChangeEdit5)
+	ON_BN_CLICKED(IDC_BUTTON3, &CMy1115Line01Dlg::OnBnClickedButton3)
+	ON_EN_CHANGE(IDC_EDIT6, &CMy1115Line01Dlg::OnEnChangeEdit6)
 END_MESSAGE_MAP()
 
 
@@ -131,6 +138,24 @@ BOOL CMy1115Line01Dlg::OnInitDialog()
 	m_Tab1.InsertItem(4, "Phone call");	     //  week 3, 4
 	m_Tab1.InsertItem(5, "Video call");	     //  week 4, 5
 	m_Tab1.InsertItem(6, "Sticker");         //  week 5
+
+	Hiden_All();
+	//  show register tab
+	SetWindowText("Register");
+	GetDlgItem(IDC_STATIC7)->ShowWindow(SW_SHOW);
+//	GetDlgItem(IDC_BUTTON1)->ShowWindow(SW_SHOW);
+//	GetDlgItem(IDC_EDIT1)->ShowWindow(SW_SHOW);    //  account
+//	GetDlgItem(IDC_EDIT2)->ShowWindow(SW_SHOW);	   //  password
+//	GetDlgItem(IDC_STATIC1)->ShowWindow(SW_SHOW);  //  account
+//	GetDlgItem(IDC_STATIC2)->ShowWindow(SW_SHOW);  //  password
+//	GetDlgItem(IDC_STATIC6)->ShowWindow(SW_SHOW);  //  group box
+	//  auto register
+	OnBnClickedButton1();
+
+	//  set friend list
+	m_list1.InsertColumn(0, "Name");         m_list1.SetColumnWidth(0, 120);  //  (AC)
+	m_list1.InsertColumn(1, "ID");	         m_list1.SetColumnWidth(1, 120);  //  (PW)
+	m_list1.InsertColumn(2, "Status"); 	     m_list1.SetColumnWidth(2, 120);  //  (Online/Offline)
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -190,22 +215,29 @@ int CMy1115Line01Dlg::Hiden_All()
 	//  buttons
 	GetDlgItem(IDC_BUTTON1)->ShowWindow(SW_HIDE);  //  register
 	GetDlgItem(IDC_BUTTON2)->ShowWindow(SW_HIDE);  //  send message
+	GetDlgItem(IDC_BUTTON3)->ShowWindow(SW_HIDE);  //  add friend
 	//  edit boxes
 	GetDlgItem(IDC_EDIT1)->ShowWindow(SW_HIDE);    //  account
 	GetDlgItem(IDC_EDIT2)->ShowWindow(SW_HIDE);	   //  password
 	GetDlgItem(IDC_EDIT3)->ShowWindow(SW_HIDE);    //  display
 	GetDlgItem(IDC_EDIT4)->ShowWindow(SW_HIDE);	   //  message
 	GetDlgItem(IDC_EDIT5)->ShowWindow(SW_HIDE);	   //  reciver
+	GetDlgItem(IDC_EDIT6)->ShowWindow(SW_HIDE);	   //  friend
 	//  text
 	GetDlgItem(IDC_STATIC1)->ShowWindow(SW_HIDE);  //  account
 	GetDlgItem(IDC_STATIC2)->ShowWindow(SW_HIDE);  //  password
 	GetDlgItem(IDC_STATIC3)->ShowWindow(SW_HIDE);  //  display
 	GetDlgItem(IDC_STATIC4)->ShowWindow(SW_HIDE);  //  message
 	GetDlgItem(IDC_STATIC5)->ShowWindow(SW_HIDE);  //  reciver
+	GetDlgItem(IDC_STATIC8)->ShowWindow(SW_HIDE);  //  add friend
 	//  tab
-	GetDlgItem(IDC_TAB1)->ShowWindow(SW_HIDE);     //  group
+//	GetDlgItem(IDC_TAB1)->ShowWindow(SW_HIDE);     //  group
 	//  group
-	GetDlgItem(IDC_STATIC6)->ShowWindow(SW_HIDE);
+	GetDlgItem(IDC_STATIC6)->ShowWindow(SW_HIDE);  //  group box
+	//  bitmap
+	GetDlgItem(IDC_STATIC7)->ShowWindow(SW_HIDE);  //  bitmap
+	//  list
+	GetDlgItem(IDC_LIST1)->ShowWindow(SW_HIDE);    //  friend list
 
 	return 0;
 }
@@ -222,19 +254,36 @@ void CMy1115Line01Dlg::OnSelchangeTab1(NMHDR* pNMHDR, LRESULT* pResult)
 	{
 	case 0:
 		SetWindowText("LOGO");
+		GetDlgItem(IDC_STATIC7)->ShowWindow(SW_SHOW);
 		break;
 
 	case 1:
 		SetWindowText("Register");
 		GetDlgItem(IDC_BUTTON1)->ShowWindow(SW_SHOW);
+		GetDlgItem(IDC_EDIT1)->ShowWindow(SW_SHOW);    //  account
+		GetDlgItem(IDC_EDIT2)->ShowWindow(SW_SHOW);	   //  password
+		GetDlgItem(IDC_STATIC1)->ShowWindow(SW_SHOW);  //  account
+		GetDlgItem(IDC_STATIC2)->ShowWindow(SW_SHOW);  //  password
+		GetDlgItem(IDC_STATIC6)->ShowWindow(SW_SHOW);  //  group box
 		break;
 
 	case 2:
 		SetWindowText("Chatroom");
+		GetDlgItem(IDC_BUTTON2)->ShowWindow(SW_SHOW);
+		GetDlgItem(IDC_EDIT3)->ShowWindow(SW_SHOW);    //  display
+		GetDlgItem(IDC_EDIT4)->ShowWindow(SW_SHOW);	   //  message
+		GetDlgItem(IDC_EDIT5)->ShowWindow(SW_SHOW);	   //  reciver
+		GetDlgItem(IDC_STATIC3)->ShowWindow(SW_SHOW);  //  display
+		GetDlgItem(IDC_STATIC4)->ShowWindow(SW_SHOW);  //  message
+		GetDlgItem(IDC_STATIC5)->ShowWindow(SW_SHOW);  //  reciver
 		break;
 
 	case 3:
 		SetWindowText("Friends");
+		GetDlgItem(IDC_BUTTON3)->ShowWindow(SW_SHOW);  //  add friend
+		GetDlgItem(IDC_EDIT6)->ShowWindow(SW_SHOW);	   //  friend
+		GetDlgItem(IDC_STATIC8)->ShowWindow(SW_SHOW);  //  add friend
+		GetDlgItem(IDC_LIST1)->ShowWindow(SW_SHOW);    //  friend list
 		break;
 
 	case 4:
@@ -283,13 +332,31 @@ void CMy1115Line01Dlg::OnBnClickedButton2()  //  SendMsg button
 	send(Line_Sock, S1, strlen(S1), 0);
 }
 
+void CMy1115Line01Dlg::OnBnClickedButton3()  //  Add friend button
+{
+	//  0. read file to get friend list
+
+	//  1. get friend 
+	UpdateData(TRUE);
+	char S1[2000];
+	sprintf_s(S1, sizeof(S1), "%s", m_friend);
+	UpdateData(FALSE);
+	//  2. add friend to list and set to offline
+	int Cur = m_list1.GetItemCount();
+	m_list1.InsertItem(Cur, S1);		     //  Name
+	m_list1.SetItemText(Cur, 1, "???");      //  ID
+	m_list1.SetItemText(Cur, 2, "Offline");  //  Status
+	//  3. save friend list to file(a+)
+
+	//  4. check if friend is online
+}
 
 LRESULT CMy1115Line01Dlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	char S1[2000];
 	int i = 0;
 	//  3. Receive the response from server
-	
+
 	if (message == LINE_EVENT)
 	{
 		switch (lParam)
@@ -324,7 +391,7 @@ LRESULT CMy1115Line01Dlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					m_Display += S1;
 				}
 				UpdateData(FALSE);
-				
+
 				// roll to the bottom
 				m_Display2.LineScroll(m_Display2.GetLineCount());
 			}
@@ -340,4 +407,25 @@ LRESULT CMy1115Line01Dlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	}
 
 	return CDialogEx::WindowProc(message, wParam, lParam);
+}
+
+void CMy1115Line01Dlg::OnEnChangeEdit5()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// send this notification unless you override the CDialogEx::OnInitDialog()
+	// function and call CRichEditCtrl().SetEventMask()
+	// with the ENM_CHANGE flag ORed into the mask.
+
+	// TODO:  Add your control notification handler code here
+}
+
+
+void CMy1115Line01Dlg::OnEnChangeEdit6()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// send this notification unless you override the CDialogEx::OnInitDialog()
+	// function and call CRichEditCtrl().SetEventMask()
+	// with the ENM_CHANGE flag ORed into the mask.
+
+	// TODO:  Add your control notification handler code here
 }
