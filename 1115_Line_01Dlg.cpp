@@ -185,15 +185,38 @@ HCURSOR CMy1115Line01Dlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+int CMy1115Line01Dlg::Hiden_All()
+{
+	//  buttons
+	GetDlgItem(IDC_BUTTON1)->ShowWindow(SW_HIDE);  //  register
+	GetDlgItem(IDC_BUTTON2)->ShowWindow(SW_HIDE);  //  send message
+	//  edit boxes
+	GetDlgItem(IDC_EDIT1)->ShowWindow(SW_HIDE);    //  account
+	GetDlgItem(IDC_EDIT2)->ShowWindow(SW_HIDE);	   //  password
+	GetDlgItem(IDC_EDIT3)->ShowWindow(SW_HIDE);    //  display
+	GetDlgItem(IDC_EDIT4)->ShowWindow(SW_HIDE);	   //  message
+	GetDlgItem(IDC_EDIT5)->ShowWindow(SW_HIDE);	   //  reciver
+	//  text
+	GetDlgItem(IDC_STATIC1)->ShowWindow(SW_HIDE);  //  account
+	GetDlgItem(IDC_STATIC2)->ShowWindow(SW_HIDE);  //  password
+	GetDlgItem(IDC_STATIC3)->ShowWindow(SW_HIDE);  //  display
+	GetDlgItem(IDC_STATIC4)->ShowWindow(SW_HIDE);  //  message
+	GetDlgItem(IDC_STATIC5)->ShowWindow(SW_HIDE);  //  reciver
+	//  tab
+	GetDlgItem(IDC_TAB1)->ShowWindow(SW_HIDE);     //  group
+	//  group
+	GetDlgItem(IDC_STATIC6)->ShowWindow(SW_HIDE);
 
+	return 0;
+}
 
 void CMy1115Line01Dlg::OnSelchangeTab1(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	// TODO: Add your control notification handler code here
 	char S1[200];
 	int i = m_Tab1.GetCurSel();
-	sprintf_s(S1, sizeof(S1), "%d", m_Tab1.GetCurSel());
-	SetWindowText(S1);
+
+	Hiden_All();
 
 	switch (i)
 	{
@@ -203,6 +226,7 @@ void CMy1115Line01Dlg::OnSelchangeTab1(NMHDR* pNMHDR, LRESULT* pResult)
 
 	case 1:
 		SetWindowText("Register");
+		GetDlgItem(IDC_BUTTON1)->ShowWindow(SW_SHOW);
 		break;
 
 	case 2:
@@ -243,6 +267,8 @@ void CMy1115Line01Dlg::OnBnClickedButton1()  //  Register button
 		//Draw("pics/anon.bmp", 10, 10, 0, 0.0);
 		TCPIP_F = 1;
 	}
+
+	Hiden_All();
 }
 
 

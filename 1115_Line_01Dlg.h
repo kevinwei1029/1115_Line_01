@@ -154,4 +154,5 @@ public:
 		}
 		return 0;
 	}
+	int Hiden_All();
 };
